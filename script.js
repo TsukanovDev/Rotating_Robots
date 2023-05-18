@@ -14,10 +14,15 @@ window.addEventListener('load', function () {
 		constructor(canvas) {
 			this.canvas = canvas;
 			this.x = this.canvas.width * 0.5;
-			this.y = this.canvas.height * 0.5;
+			this.y = this.canvas.height * 0.2;
 			this.radius = 80;
 			this.angle = 0;
+			this.spriteWidth = 370;
+			this.spriteHeight = 370;
+			this.frameX = 0;
+			this.maxFrame = 73;
 			this.bodyImage = document.getElementById('body');
+			this.bodySprite = document.getElementById('bodySprite');
 			this.eye1Image = document.getElementById('eye1');
 			this.eye2Image = document.getElementById('eye2');
 			this.reflectionImage = document.getElementById('reflection');
@@ -35,7 +40,7 @@ window.addEventListener('load', function () {
 		draw(context) {
 			//body
 			//рисуем изображение 
-			context.drawImage(this.bodyImage, this.x - this.bodyImage.width * 0.5 + 65, this.y - this.bodyImage.height * 0.5 - 53);
+			context.drawImage(this.bodySprite, this.frameX * this.spriteWidth, 0, this.spriteHeight, this.spriteWidth, this.x - this.bodyImage.width * 0.5 + 65, this.y - this.bodyImage.height * 0.5 - 53, this.spriteHeight, this.spriteWidth);
 
 			//eye1
 			context.drawImage(this.eye1Image, this.x + Math.cos(this.angle) * this.radius * 0.4 - this.eye1Image.width * 0.5, this.y + Math.sin(this.angle) * this.radius * 0.4 - this.eye1Image.width * 0.5);
@@ -53,6 +58,16 @@ window.addEventListener('load', function () {
 			const dy = this.mouse.y - this.y;
 			// находим угол
 			this.angle = Math.atan2(dy, dx);
+			//sprite animation
+			//if (this.frameX >= this.maxFrame) {
+			//	this.frame = 0
+			//} else {
+			//	this.frameX++;
+			//}
+
+			this.frameX > this.maxFrame ? this.frameX = 0 : this.frameX++;
+
+			this.y++;
 
 
 			//this.x = this.mouse.x;
